@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="bg_dark">#050B18</color>
+    <color name="input_bg">#0D1526</color>
+    <color name="party_blue">#007BFF</color>
+    <color name="party_light_blue">#00D1FF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_text">#9DA1A9</color>
 </resources>
