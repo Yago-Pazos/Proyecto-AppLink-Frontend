@@ -1,5 +1,10 @@
 package com.example.partycoruna.models;
 
+/* RegisterResponse
+ - Modelo que representa la respuesta del servidor tras registrar.
+ - Getters: getMessage(), getToken(), getUserId().
+ - Uso: String token = response.body().getToken();
+ */
 public class RegisterResponse {
 
     private String message;

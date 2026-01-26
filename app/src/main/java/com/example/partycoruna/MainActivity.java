@@ -8,6 +8,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/* MainActivity
+ - Actividad principal con soporte edge-to-edge. Manténla como launcher o cambia el manifest.
+ */
 public class MainActivity extends AppCompatActivity {
 
     @Override
