@@ -1,5 +1,6 @@
 package com.example.partycoruna;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.partycoruna.helpers.AuthManager;
 import com.example.partycoruna.models.RegisterRequest;
 import com.example.partycoruna.models.RegisterResponse;
 import com.example.partycoruna.network.ApiClient;
@@ -23,6 +25,16 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Si el usuario ya está logueado, ir directamente a MainActivity
+        if (AuthManager.isLoggedIn(this)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        
         setContentView(R.layout.activity_register);
 
         etName = findViewById(R.id.etName);
@@ -54,11 +66,23 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Toast.makeText(RegisterActivity.this,
-                            "Registro correcto", Toast.LENGTH_SHORT).show();
-
                     String token = response.body().getToken();
-                    // aquí luego guardaremos el token
+                    if (token != null && !token.isEmpty()) {
+                        // Guardar el token
+                        AuthManager.saveToken(RegisterActivity.this, token);
+                        
+                        Toast.makeText(RegisterActivity.this,
+                                "Registro correcto", Toast.LENGTH_SHORT).show();
+                        
+                        // Navegar a MainActivity
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(RegisterActivity.this,
+                                "Error: Token no recibido", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(RegisterActivity.this,
                             "Error al registrar", Toast.LENGTH_SHORT).show();

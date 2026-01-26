@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_navigation_bar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/nav_bar_background"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp">
+
+    <LinearLayout
+        android:id="@+id/nav_container"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+    <!-- Home Button -->
+    <LinearLayout
+        android:id="@+id/nav_home"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:minWidth="56dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/nav_button_active_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <ImageView
+            android:id="@+id/icon_home"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_home"
+            android:tint="@color/nav_active_text" />
+
+        <TextView
+            android:id="@+id/text_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inicio"
+            android:textColor="@color/nav_active_text"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:layout_marginStart="8dp"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <!-- Favoritos Button -->
+    <LinearLayout
+        android:id="@+id/nav_favoritos"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:minWidth="56dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/nav_button_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <ImageView
+            android:id="@+id/icon_favoritos"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_favorite"
+            android:tint="@color/nav_inactive" />
+
+        <TextView
+            android:id="@+id/text_favoritos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Favoritos"
+            android:textColor="@color/nav_inactive"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:layout_marginStart="8dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Amigos Button -->
+    <LinearLayout
+        android:id="@+id/nav_amigos"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:minWidth="56dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/nav_button_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <ImageView
+            android:id="@+id/icon_amigos"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_group"
+            android:tint="@color/nav_inactive" />
+
+        <TextView
+            android:id="@+id/text_amigos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amigos"
+            android:textColor="@color/nav_inactive"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:layout_marginStart="8dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <!-- Perfil Button -->
+    <LinearLayout
+        android:id="@+id/nav_perfil"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:minWidth="56dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/nav_button_background"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
+
+        <ImageView
+            android:id="@+id/icon_perfil"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_profile"
+            android:tint="@color/nav_inactive" />
+
+        <TextView
+            android:id="@+id/text_perfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perfil"
+            android:textColor="@color/nav_inactive"
+            android:textSize="16sp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:ellipsize="none"
+            android:layout_marginStart="8dp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Línea púrpura inferior -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/nav_purple_line" />
+
+    </LinearLayout>
+
+</FrameLayout>
+
