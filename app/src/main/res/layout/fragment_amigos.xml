@@ -3,20 +3,100 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E6F0FF">
+    android:background="#0A0E27">
+
+    <!-- Top bar simple -->
+    <LinearLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="18dp"
+        android:paddingBottom="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PartyLink"
+            android:textColor="#00A8FF"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/btnAddFriend"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_icon_button"
+            android:contentDescription="Añadir amigo"
+            android:src="@drawable/ic_person_add"
+            app:tint="#00A8FF" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+        android:id="@+id/titleCrew"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Pantalla de Amigos"
-        android:textSize="24sp"
+        android:text="Tu Crew"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
         android:textStyle="bold"
-        android:textColor="#333333"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAmigos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/titleCrew"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="90dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:clipToPadding="false"
+        android:paddingBottom="12dp" />
+
+    <TextView
+        android:id="@+id/emptyTextAmigos"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Aún no tienes amigos en tu crew."
+        android:textColor="#8F92A1"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:padding="24dp"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewAmigos"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerViewAmigos"
+        app:layout_constraintStart_toStartOf="@id/recyclerViewAmigos"
+        app:layout_constraintEnd_toEndOf="@id/recyclerViewAmigos" />
+
+    <ProgressBar
+        android:id="@+id/progressBarAmigos"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:indeterminateTint="#00A8FF"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/recyclerViewAmigos"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerViewAmigos"
+        app:layout_constraintStart_toStartOf="@id/recyclerViewAmigos"
+        app:layout_constraintEnd_toEndOf="@id/recyclerViewAmigos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

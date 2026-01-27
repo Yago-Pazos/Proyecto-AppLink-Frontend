@@ -280,4 +280,19 @@ public class MainActivity extends AppCompatActivity {
             currentFragment = fragment;
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(android.view.MenuItem item) {
+        if (item.getItemId() == R.id.action_tu_crew) {
+            startActivity(new android.content.Intent(this, com.example.partycoruna.ui.TuCrewActivity.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
