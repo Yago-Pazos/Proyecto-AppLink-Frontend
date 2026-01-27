@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Permiso para llamadas HTTP -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,7 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PartyCoruna">
+
+        <!-- MAIN -->
         <activity android:name=".MainActivity" />
+
+        <!-- REGISTER (pantalla inicial ahora mismo) -->
         <activity
             android:name=".RegisterActivity"
             android:exported="true">
@@ -22,5 +28,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- ✅ PERFIL -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
     </application>
 </manifest>

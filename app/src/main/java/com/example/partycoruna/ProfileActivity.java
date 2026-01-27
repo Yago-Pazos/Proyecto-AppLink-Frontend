@@ -1,28 +1,26 @@
-package com.example.partycoruna.fragments;
+package com.example.partycoruna;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
-import com.example.partycoruna.ProfileActivity;
-import com.example.partycoruna.R;
+import androidx.appcompat.app.AppCompatActivity;
+import com.bumptech.glide.Glide;
 import com.example.partycoruna.helpers.AuthManager;
 import com.example.partycoruna.models.UserProfileResponse;
 import com.example.partycoruna.network.ApiClient;
 import com.example.partycoruna.network.ApiService;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class PerfilFragment extends Fragment {
+/* ProfileActivity
+ - Muestra el perfil del usuario. Usa `user.handle` si el backend lo devuelve; si no, usa el username guardado en AuthManager.
+ - IDs del layout: tvName, tvHandle, tvEvents, tvFriends, imgAvatar, btnEditAvatar, btnInstagram, btnTwitter, btnMenu
+ */
+
+public class ProfileActivity extends AppCompatActivity {
+
+    // UI
     private TextView tvName;
     private TextView tvHandle;
     private TextView tvEvents;
@@ -30,30 +28,24 @@ public class PerfilFragment extends Fragment {
     private ImageView imgAvatar;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_perfil, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
 
-        tvName = view.findViewById(R.id.tvName);
-        tvHandle = view.findViewById(R.id.tvHandle);
-        tvEvents = view.findViewById(R.id.tvEvents);
-        tvFriends = view.findViewById(R.id.tvFriends);
-        imgAvatar = view.findViewById(R.id.imgAvatar);
+        // Referencias UI
+        tvName = findViewById(R.id.tvName);
+        tvHandle = findViewById(R.id.tvHandle);
+        tvEvents = findViewById(R.id.tvEvents);
+        tvFriends = findViewById(R.id.tvFriends);
+        imgAvatar = findViewById(R.id.imgAvatar);
 
-        return view;
-
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
         loadUserProfile();
     }
 
     private void loadUserProfile() {
 
         // Obtener token guardado
-        String token = AuthManager.getToken(requireActivity());
+        String token = AuthManager.getToken(this);
 
         if (token == null) {
             // Redirigir al login si no hay token
@@ -85,10 +77,10 @@ public class PerfilFragment extends Fragment {
                     }
 
                     // Avatar
-                    /*Glide.with(ProfileActivity.this)
+                    Glide.with(ProfileActivity.this)
                             .load(user.avatarUrl)
                             .placeholder(R.drawable.avatar_placeholder)
-                            .into(imgAvatar);*/
+                            .into(imgAvatar);
                 }
             }
 
@@ -99,6 +91,4 @@ public class PerfilFragment extends Fragment {
         });
     }
 }
-
-
 

@@ -13,14 +13,15 @@ import com.example.partycoruna.models.RegisterRequest;
 import com.example.partycoruna.models.RegisterResponse;
 import com.example.partycoruna.network.ApiClient;
 import com.example.partycoruna.network.ApiService;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    EditText etName, etEmail, etPassword, etRepeat;
-    Button btnRegister;
+    private EditText etName, etEmail, etPassword, etRepeat;
+    private Button btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void register() {
+
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
@@ -57,15 +59,17 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        RegisterRequest request = new RegisterRequest(name, email, password, repeat);
+        RegisterRequest request =
+                new RegisterRequest(name, email, password, repeat);
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
-        Call<RegisterResponse> call = apiService.register(request);
 
-        call.enqueue(new Callback<RegisterResponse>() {
+        apiService.register(request).enqueue(new Callback<RegisterResponse>() {
             @Override
             public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+
                 if (response.isSuccessful() && response.body() != null) {
+
                     String token = response.body().getToken();
                     if (token != null && !token.isEmpty()) {
                         // Guardar el token
@@ -83,10 +87,24 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterActivity.this,
                                 "Error: Token no recibido", Toast.LENGTH_SHORT).show();
                     }
+
                 } else {
-                    Toast.makeText(RegisterActivity.this,
-                            "Error al registrar", Toast.LENGTH_SHORT).show();
+                    try {
+                        String error = response.errorBody().string();
+                        Toast.makeText(
+                                RegisterActivity.this,
+                                error,
+                                Toast.LENGTH_LONG
+                        ).show();
+                    } catch (Exception e) {
+                        Toast.makeText(
+                                RegisterActivity.this,
+                                "Error desconocido",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
                 }
+
             }
 
             @Override

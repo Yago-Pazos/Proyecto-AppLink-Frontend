@@ -24,6 +24,9 @@ import com.example.partycoruna.fragments.FavoritosFragment;
 import com.example.partycoruna.fragments.HomeFragment;
 import com.example.partycoruna.fragments.PerfilFragment;
 
+/* MainActivity
+ - Actividad principal con soporte edge-to-edge. Manténla como launcher o cambia el manifest.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private LinearLayout navHome, navFavoritos, navAmigos, navPerfil;
