@@ -1,5 +1,7 @@
 package com.example.partycoruna.network;
 
+import com.example.partycoruna.models.LoginRequest;
+import com.example.partycoruna.models.LoginResponse;
 import com.example.partycoruna.models.RegisterRequest;
 import com.example.partycoruna.models.RegisterResponse;
 import com.example.partycoruna.models.UserProfileResponse;
@@ -19,6 +21,9 @@ public interface ApiService {
 
     @POST("auth/register")
     Call<RegisterResponse> register(@Body RegisterRequest request);
+
+    @POST("auth/login") // Tu ruta de backend
+    Call<LoginResponse> loginUser(@Body LoginRequest request);
 
     @GET("users/me")
     Call<UserProfileResponse> getMyProfile(@Header("Authorization") String token

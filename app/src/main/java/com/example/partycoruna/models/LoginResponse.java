@@ -1,4 +1,4 @@
-package com.example.partycoruna;
+package com.example.partycoruna.models;
 
 public class LoginResponse {
     private String token;

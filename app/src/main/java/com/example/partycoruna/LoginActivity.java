@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.partycoruna.databinding.ActivityLoginBinding;
+import com.example.partycoruna.models.LoginRequest;
+import com.example.partycoruna.models.LoginResponse;
 
 import retrofit2.Call;
 import retrofit2.Callback;
