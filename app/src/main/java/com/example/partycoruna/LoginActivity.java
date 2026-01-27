@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.partycoruna.databinding.ActivityLoginBinding;
 import com.example.partycoruna.models.LoginRequest;
 import com.example.partycoruna.models.LoginResponse;
+import com.example.partycoruna.network.ApiClient;
+import com.example.partycoruna.network.ApiService;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginRequest loginRequest = new LoginRequest(email, password);
 
         // Preparamos la llamada usando nuestra interfaz com.example.partycoruna.ApiService
-        ApiService apiService = RetrofitClient.getClient().create(ApiService.class);
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<LoginResponse> call = apiService.loginUser(loginRequest);
 
         // Ejecutamos la llamada de forma asíncrona (en segundo plano)

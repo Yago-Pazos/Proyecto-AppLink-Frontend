@@ -7,9 +7,9 @@
     <color name="white">#FFFFFF</color>
     <color name="gray_text">#9DA1A9</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 
-    <color name="bg_dark">#050B1E</color>
+
+
     <color name="primary">#00A8FF</color>
     <color name="card_bg">#0F1524</color>
     <color name="muted">#8E8E93</color>
