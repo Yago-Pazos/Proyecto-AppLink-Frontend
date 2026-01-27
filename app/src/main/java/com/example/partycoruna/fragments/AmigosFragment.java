@@ -124,17 +124,6 @@ public class AmigosFragment extends Fragment {
         Context ctx = requireContext();
         String token = AuthManager.getToken(ctx);
 
-        // DEBUG: Diagnóstico de orígenes de token — solo si la app es debuggable
-        if (isDebuggable) {
-            SharedPreferences legacy = ctx.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-            String legacyToken = legacy.getString("token", null);
-            SharedPreferences appPrefs = ctx.getSharedPreferences("MyAppPrefs", Context.MODE_PRIVATE);
-            String appToken = appPrefs.getString("auth_token", null);
-            String diag = "AuthManager:" + (token == null ? "null" : "OK")
-                    + " | MyPrefs.token:" + (legacyToken == null ? "null" : "OK")
-                    + " | MyAppPrefs.auth_token:" + (appToken == null ? "null" : "OK");
-            Toast.makeText(ctx, "DBG: " + diag, Toast.LENGTH_LONG).show();
-        }
 
         if (token == null || token.isEmpty()) {
             // Intentar migración desde implementaciones previas
