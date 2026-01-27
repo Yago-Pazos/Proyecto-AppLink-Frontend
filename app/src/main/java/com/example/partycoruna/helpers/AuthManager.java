@@ -1,6 +1,7 @@
 package com.example.partycoruna.helpers;
 
 import android.content.Context;
+import android.util.Log;
 
 /* AuthManager
  - Utilidad simple para guardar y leer el token y username en SharedPreferences.
@@ -13,10 +14,13 @@ public class AuthManager {
     private static final String PREFS_NAME = "MyAppPrefs";
     private static final String KEY_TOKEN = "auth_token";
     private static final String KEY_USERNAME = "auth_username";
+    private static final String TAG = "AuthManager";
 
     public static void saveToken(Context context, String token) {
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 .edit().putString(KEY_TOKEN, token).apply();
+        // DEBUG: loguear que guardamos token
+        Log.d(TAG, "saveToken: token saved (len=" + (token != null ? token.length() : 0) + ")");
     }
 
     public static String getToken(Context context) {
