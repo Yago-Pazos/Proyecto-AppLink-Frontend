@@ -26,6 +26,16 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Si el usuario ya está logueado, ir directamente a MainActivity
+        if (AuthManager.isLoggedIn(this)) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+        
         setContentView(R.layout.activity_register);
 
         etName = findViewById(R.id.etName);
@@ -60,21 +70,23 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (response.isSuccessful() && response.body() != null) {
 
-                    // Guardar token
-                    AuthManager.saveToken(
-                            RegisterActivity.this,
-                            response.body().getToken()
-                    );
-
-                    Toast.makeText(RegisterActivity.this,
-                            "Registro correcto", Toast.LENGTH_SHORT).show();
-
-                    // Ir al perfil
-                    startActivity(new Intent(
-                            RegisterActivity.this,
-                            ProfileActivity.class
-                    ));
-                    finish();
+                    String token = response.body().getToken();
+                    if (token != null && !token.isEmpty()) {
+                        // Guardar el token
+                        AuthManager.saveToken(RegisterActivity.this, token);
+                        
+                        Toast.makeText(RegisterActivity.this,
+                                "Registro correcto", Toast.LENGTH_SHORT).show();
+                        
+                        // Navegar a MainActivity
+                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(RegisterActivity.this,
+                                "Error: Token no recibido", Toast.LENGTH_SHORT).show();
+                    }
 
                 } else {
                     try {
