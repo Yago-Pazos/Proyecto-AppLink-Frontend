@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- Permiso para llamadas HTTP -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -28,5 +30,25 @@
         </activity>
 
     </application>
+        android:theme="@style/Theme.PartyCoruna">
 
+        <!-- MAIN -->
+        <activity android:name=".MainActivity" />
+
+        <!-- REGISTER (pantalla inicial ahora mismo) -->
+        <activity
+            android:name=".RegisterActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- ✅ PERFIL -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+
+    </application>
 </manifest>
