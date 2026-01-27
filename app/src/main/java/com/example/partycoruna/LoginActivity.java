@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<LoginResponse> call = apiService.loginUser(loginRequest);
 
-        // Ejecutamos la llamada de forma asíncrona (en segundo plano)
+        // Ejecutamos la llamada de forma asíncrona (en segundo plano)-
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
