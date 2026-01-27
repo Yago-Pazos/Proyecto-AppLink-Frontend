@@ -1,4 +1,4 @@
-package com.example.partycoruna.ui;
+package com.example.partycoruna;
 
 import android.os.Bundle;
 import android.view.View;
@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.partycoruna.R;
 import com.example.partycoruna.adapters.AmigosAdapter;
 import com.example.partycoruna.helpers.AuthManager;
 import com.example.partycoruna.models.Friend;

@@ -6,7 +6,6 @@ import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -290,7 +289,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(android.view.MenuItem item) {
         if (item.getItemId() == R.id.action_tu_crew) {
-            startActivity(new android.content.Intent(this, com.example.partycoruna.ui.TuCrewActivity.class));
+            startActivity(new android.content.Intent(this, TuCrewActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
