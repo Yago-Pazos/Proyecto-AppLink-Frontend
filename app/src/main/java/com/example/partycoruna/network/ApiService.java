@@ -1,7 +1,11 @@
 package com.example.partycoruna.network;
 
+import com.example.partycoruna.models.Evento;
 import com.example.partycoruna.models.RegisterRequest;
 import com.example.partycoruna.models.RegisterResponse;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
