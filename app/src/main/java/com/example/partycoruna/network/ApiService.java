@@ -32,8 +32,6 @@ public interface ApiService {
     Call<LoginResponse> loginUser(@Body LoginRequest request);
 
     @GET("users/me")
-    Call<UserProfileResponse> getMyProfile(
-            @Header("Authorization") String token
-    );
+    Call<UserProfileResponse> getMyProfile();
 
 }

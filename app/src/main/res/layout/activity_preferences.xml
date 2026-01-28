@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#05080D"
-    tools:context=".ui.preferences.PreferencesActivity"
+    tools:context=".PreferencesActivity"
     tools:ignore="NamespaceTypo">
 
     <ProgressBar

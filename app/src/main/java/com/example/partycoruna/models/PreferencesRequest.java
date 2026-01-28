@@ -3,13 +3,13 @@ package com.example.partycoruna.models;
 import com.google.gson.annotations.SerializedName;
 
 public class PreferencesRequest {
-    @SerializedName("music")
+    @SerializedName("musicGenre")
     private String music;
 
-    @SerializedName("ambiance")
+    @SerializedName("environment")
     private String ambiance;
 
-    @SerializedName("age")
+    @SerializedName("ageRange")
     private String age;
 
     // Constructor

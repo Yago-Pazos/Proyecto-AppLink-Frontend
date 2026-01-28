@@ -102,8 +102,8 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterActivity.this,
                                 "Registro correcto", Toast.LENGTH_SHORT).show();
 
-                        // Navegar a MainActivity
-                        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
+                        // Navegar a PreferencesActivity
+                        Intent intent = new Intent(RegisterActivity.this, PreferencesActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                         finish();
