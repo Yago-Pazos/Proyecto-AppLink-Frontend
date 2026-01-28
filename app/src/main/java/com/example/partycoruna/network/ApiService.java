@@ -32,7 +32,7 @@ public interface ApiService {
     Call<RegisterResponse> register(@Body RegisterRequest request);
 
     @GET("users/me/favorites")
-    Call<List<Evento>> getFavoritos(@Header("Authorization") String token);
+    Call<List<Evento>> getFavoritos();
 
     @POST("users/preferences")
     Call<Void> savePreferences(@Body PreferencesRequest request);
