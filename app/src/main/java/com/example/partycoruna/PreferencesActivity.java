@@ -1,9 +1,10 @@
-package com.example.partycoruna.ui.preferences;
+package com.example.partycoruna;
 
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.partycoruna.R;
+
+import com.example.partycoruna.fragments.preferences.MusicFragment;
 
 public class PreferencesActivity extends AppCompatActivity {
 
@@ -27,7 +28,7 @@ public class PreferencesActivity extends AppCompatActivity {
     }
 
     /**
-     * Método público para que los fragmentos actualicen el progreso.
+     * Metodo público para que los fragmentos actualicen el progreso.
      * Si sale error aquí, revisa que el ID en tu XML sea "progressBar".
      */
     public void updateProgress(int progress) {

@@ -1,4 +1,4 @@
-package com.example.partycoruna.ui.preferences;
+package com.example.partycoruna.fragments.preferences;
 
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.partycoruna.MainActivity;
 import com.example.partycoruna.R;
 import com.example.partycoruna.adapters.OptionAdapter;
+import com.example.partycoruna.PreferencesActivity;
 import com.example.partycoruna.viewmodels.PreferencesViewModel;
 
 import java.util.Arrays;
@@ -62,8 +63,8 @@ public class AmbianceFragment extends Fragment implements OptionAdapter.OnSelect
 
         btnAction.setOnClickListener(v -> {
             if (!adapter.getSelectedItems().isEmpty()) {
-                String musicElegida = adapter.getSelectedItems().get(0);
-                viewModel.setMusic(musicElegida);
+                String ambianceElegida = adapter.getSelectedItems().get(0);
+                viewModel.setAmbiance(ambianceElegida);
                 navigateToAge();
             } else {
                 goToHome();

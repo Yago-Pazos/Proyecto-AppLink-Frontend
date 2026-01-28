@@ -25,6 +25,18 @@ public class PreferencesViewModel extends ViewModel {
     // Genera el objeto final para el POST /users/preferences.
 
     public PreferencesRequest getFinalRequest() {
-        return new PreferencesRequest(selectedMusic, selectedAmbiance, selectedAge);
+        // Normalizar Música
+        String musicToSend = selectedMusic.toLowerCase();
+
+        // Normalizar Edad
+        String ageToSend = selectedAge.toLowerCase();
+
+        // Normalizar Ambiente (Mapeo manual para casos especiales)
+        String ambianceToSend = selectedAmbiance.toLowerCase();
+        if (selectedAmbiance.equals("Salón de Fiestas")) {
+            ambianceToSend = "salon de fiesta";
+        }
+        
+        return new PreferencesRequest(musicToSend, ambianceToSend, ageToSend);
     }
 }

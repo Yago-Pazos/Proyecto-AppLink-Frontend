@@ -74,8 +74,7 @@ public class PerfilFragment extends Fragment {
 
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
 
-        Call<UserProfileResponse> call =
-                apiService.getMyProfile("Bearer " + token);
+        Call<UserProfileResponse> call = apiService.getMyProfile();
 
         call.enqueue(new Callback<UserProfileResponse>() {
             @Override
