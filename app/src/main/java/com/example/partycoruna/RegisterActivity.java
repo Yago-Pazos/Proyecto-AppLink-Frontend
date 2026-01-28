@@ -2,8 +2,10 @@ package com.example.partycoruna;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,20 +24,13 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText etName, etEmail, etPassword, etRepeat;
     private Button btnRegister;
+    private TextView tvLogin;
+
+    private android.widget.ImageButton btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
-        // Si el usuario ya está logueado, ir directamente a MainActivity
-        if (AuthManager.isLoggedIn(this)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
-            return;
-        }
-        
         setContentView(R.layout.activity_register);
 
         etName = findViewById(R.id.etName);
@@ -43,8 +38,37 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etRepeat = findViewById(R.id.etRepeat);
         btnRegister = findViewById(R.id.btnRegister);
+        tvLogin = findViewById(R.id.tvLogin);
+        btnBack = findViewById(R.id.btnBack);
 
         btnRegister.setOnClickListener(v -> register());
+
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> finish());
+        }
+
+        // Enlace a Login desde Register
+        if (tvLogin != null) {
+            String text = "¿Ya tienes cuenta? Iniciar Sesión";
+            android.text.SpannableString ss = new android.text.SpannableString(text);
+            int start = text.indexOf("Iniciar Sesión");
+            int end = start + "Iniciar Sesión".length();
+
+            // Color azul
+            ss.setSpan(new android.text.style.ForegroundColorSpan(getResources().getColor(R.color.party_light_blue)), start, end, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            // Negrita
+            ss.setSpan(new android.text.style.StyleSpan(android.graphics.Typeface.BOLD), start, end, android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            
+            tvLogin.setText(ss);
+
+            tvLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(RegisterActivity.this, LoginActivity.class);
+                    startActivity(i);
+                }
+            });
+        }
     }
 
     private void register() {
@@ -74,10 +98,10 @@ public class RegisterActivity extends AppCompatActivity {
                     if (token != null && !token.isEmpty()) {
                         // Guardar el token
                         AuthManager.saveToken(RegisterActivity.this, token);
-                        
+
                         Toast.makeText(RegisterActivity.this,
                                 "Registro correcto", Toast.LENGTH_SHORT).show();
-                        
+
                         // Navegar a MainActivity
                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
