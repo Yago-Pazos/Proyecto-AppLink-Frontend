@@ -1,7 +1,10 @@
 package com.example.partycoruna.network;
 
+
+import com.example.partycoruna.models.PreferencesRequest;
 import com.example.partycoruna.models.LoginRequest;
 import com.example.partycoruna.models.LoginResponse;
+
 import com.example.partycoruna.models.RegisterRequest;
 import com.example.partycoruna.models.RegisterResponse;
 import com.example.partycoruna.models.UserProfileResponse;
@@ -22,6 +25,9 @@ public interface ApiService {
     @POST("auth/register")
     Call<RegisterResponse> register(@Body RegisterRequest request);
 
+    @POST("users/preferences")
+    Call<Void> savePreferences(@Body PreferencesRequest request);
+
     @POST("auth/login")
     Call<LoginResponse> loginUser(@Body LoginRequest request);
 
@@ -29,4 +35,5 @@ public interface ApiService {
     Call<UserProfileResponse> getMyProfile(
             @Header("Authorization") String token
     );
+
 }
