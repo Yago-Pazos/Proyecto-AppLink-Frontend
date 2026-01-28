@@ -1,13 +1,19 @@
 package com.example.partycoruna.network;
 
 
+import com.example.partycoruna.models.Evento;
+import com.example.partycoruna.models.RegisterRequest;
+import com.example.partycoruna.models.RegisterResponse;
+
+import java.util.List;
+
+
 import com.example.partycoruna.models.PreferencesRequest;
 import com.example.partycoruna.models.LoginRequest;
 import com.example.partycoruna.models.LoginResponse;
 
-import com.example.partycoruna.models.RegisterRequest;
-import com.example.partycoruna.models.RegisterResponse;
 import com.example.partycoruna.models.UserProfileResponse;
+
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,6 +31,9 @@ public interface ApiService {
     @POST("auth/register")
     Call<RegisterResponse> register(@Body RegisterRequest request);
 
+    @GET("users/me/favorites")
+    Call<List<Evento>> getFavoritos(@Header("Authorization") String token);
+
     @POST("users/preferences")
     Call<Void> savePreferences(@Body PreferencesRequest request);
 
@@ -33,5 +42,6 @@ public interface ApiService {
 
     @GET("users/me")
     Call<UserProfileResponse> getMyProfile();
+
 
 }
