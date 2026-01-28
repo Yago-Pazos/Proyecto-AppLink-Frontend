@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="bg_dark">#050B18</color>
+    <color name="input_bg">#0D1526</color>
+    <color name="party_blue">#007BFF</color>
+    <color name="party_light_blue">#00D1FF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray_text">#9DA1A9</color>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="blue_primary">#0A84FF</color>
+
+
+    <color name="primary">#00A8FF</color>
+    <color name="card_bg">#0F1524</color>
+    <color name="muted">#8E8E93</color>
+
     <color name="nav_background">#1A1F2E</color>
     <color name="nav_active">#00A8FF</color>
     <color name="nav_active_text">#FFFFFF</color>

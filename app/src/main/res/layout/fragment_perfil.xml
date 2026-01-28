@@ -3,20 +3,208 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0E6FF">
+    android:background="@color/bg_dark">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_dark">
+
+        <!-- LOGO -->
+        <TextView
+            android:id="@+id/tvLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PartyLink"
+            android:textColor="@color/primary"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp" />
+
+        <!-- MENU (hamburger) -->
+        <ImageView
+            android:id="@+id/btnMenu"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/ic_back"
+            android:contentDescription="Menu" />
+
+        <!-- AVATAR -->
+        <ImageView
+            android:id="@+id/imgAvatar"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_below="@id/tvLogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_profile"
+            android:background="@drawable/bg_avatar"
+            android:scaleType="centerCrop"
+            android:contentDescription="Avatar" />
+
+        <!-- EDIT ICON overlay -->
+        <ImageView
+            android:id="@+id/btnEditAvatar"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_toEndOf="@id/imgAvatar"
+            android:layout_alignBottom="@id/imgAvatar"
+            android:layout_marginStart="-24dp"
+            android:src="@drawable/ic_edit"
+            android:background="@drawable/bg_edit_button"
+            android:contentDescription="Editar avatar" />
+
+        <!-- NOMBRE -->
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_below="@id/imgAvatar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp" />
+
+        <!-- HANDLE -->
+        <TextView
+            android:id="@+id/tvHandle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:layout_below="@id/tvName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_handle"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp" />
+
+        <!-- ICONOS SOCIALES - Añadido un ID para poder referenciarlo -->
+        <LinearLayout
+            android:id="@+id/layoutSocial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvHandle"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/btnInstagram"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_instagram"
+                android:background="@drawable/bg_social_button"
+                android:padding="12dp"
+                android:layout_marginEnd="12dp"
+                android:contentDescription="Instagram" />
+
+            <ImageView
+                android:id="@+id/btnTwitter"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/ic_twitter"
+                android:background="@drawable/bg_social_button"
+                android:padding="12dp"
+                android:contentDescription="Twitter" />
+        </LinearLayout>
+
+        <!-- STATS - Corregido para que se muestre debajo de los iconos sociales -->
+        <LinearLayout
+            android:id="@+id/layoutStats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layoutSocial"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:weightSum="2"
+            android:baselineAligned="false">
+
+            <!-- EVENTOS -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvEvents"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="EVENTOS"
+                    android:textColor="@android:color/darker_gray"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <!-- AMIGOS -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_card"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvFriends"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="AMIGOS"
+                    android:textColor="@android:color/darker_gray"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+    
+    <!-- BUTTON LOGOUT -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pantalla de Perfil"
-        android:textSize="24sp"
+        android:text="Cerrar Sesión"
+        android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="#333333"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/primary"
+        android:layout_margin="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:cornerRadius="8dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
