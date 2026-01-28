@@ -1,4 +1,4 @@
-package com.example.partycoruna.Adapters;
+package com.example.partycoruna.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

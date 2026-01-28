@@ -48,16 +48,7 @@ public class PerfilFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         
-        // Botón Cerrar Sesión
-        view.findViewById(R.id.btnLogout).setOnClickListener(v -> {
-            // 1. Borrar datos sesión
-            AuthManager.logout(requireActivity());
-            
-            // 2. Ir a StartActivity
-            android.content.Intent intent = new android.content.Intent(requireActivity(), com.example.partycoruna.StartActivity.class);
-            intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK | android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        });
+
 
         loadUserProfile();
     }
