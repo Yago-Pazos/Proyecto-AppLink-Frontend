@@ -3,6 +3,11 @@ package com.example.partycoruna.network;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/* ApiClient
+ - Provee una instancia singleton de Retrofit configurada con la `BASE_URL` y Gson.
+ - Uso rápido:
+     ApiService api = ApiClient.getClient().create(ApiService.class);
+ */
 public class ApiClient {
 
     private static Retrofit retrofit;
