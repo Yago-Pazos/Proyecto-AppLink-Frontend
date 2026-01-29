@@ -16,6 +16,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
+import androidx.core.view.GravityCompat;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -92,6 +93,16 @@ public class MainActivity extends AppCompatActivity {
         if (btnCloseMenu != null) {
             btnCloseMenu.setOnClickListener(v -> {
                 drawerLayout.closeDrawers();
+            });
+        }
+
+        // Buscamos el botón de las tres rayitas (ajusta el ID si es diferente)
+        View btnMenuLateral = findViewById(R.id.btnMenu);
+
+        if (btnMenuLateral != null) {
+            btnMenuLateral.setOnClickListener(v -> {
+                // Abrimos el menú desde el lado izquierdo (START)
+                drawerLayout.openDrawer(GravityCompat.START);
             });
         }
 
