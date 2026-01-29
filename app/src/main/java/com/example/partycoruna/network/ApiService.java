@@ -1,12 +1,12 @@
 package com.example.partycoruna.network;
 
-
+import com.example.partycoruna.models.Evento;
+import com.example.partycoruna.models.RegisterRequest;
+import com.example.partycoruna.models.RegisterResponse;
+import java.util.List;
 import com.example.partycoruna.models.PreferencesRequest;
 import com.example.partycoruna.models.LoginRequest;
 import com.example.partycoruna.models.LoginResponse;
-
-import com.example.partycoruna.models.RegisterRequest;
-import com.example.partycoruna.models.RegisterResponse;
 import com.example.partycoruna.models.UserProfileResponse;
 
 import retrofit2.Call;
@@ -25,6 +25,9 @@ public interface ApiService {
     @POST("auth/register")
     Call<RegisterResponse> register(@Body RegisterRequest request);
 
+    @GET("users/me/favorites")
+    Call<List<Evento>> getFavoritos();
+
     @POST("users/preferences")
     Call<Void> savePreferences(@Body PreferencesRequest request);
 
@@ -36,5 +39,11 @@ public interface ApiService {
 
     @POST("auth/logout")
     Call<Void> logout(@Header("Authorization") String token);
+    Call<UserProfileResponse> getMyProfile();
 
+    @GET("events")
+    Call<List<Evento>> getEvents(@retrofit2.http.Query("filter") String filter);
+
+    @POST("events/{id}/toggle-favorite")
+    Call<com.example.partycoruna.models.ToggleFavoriteResponse> toggleFavorite(@retrofit2.http.Path("id") int eventId);
 }
