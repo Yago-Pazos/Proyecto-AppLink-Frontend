@@ -44,4 +44,10 @@ public interface ApiService {
     Call<UserProfileResponse> getMyProfile();
 
 
+    @GET("events")
+    Call<List<Evento>> getEvents(@retrofit2.http.Query("filter") String filter);
+
+    @POST("events/{id}/toggle-favorite")
+    Call<com.example.partycoruna.models.ToggleFavoriteResponse> toggleFavorite(@retrofit2.http.Path("id") int eventId);
+
 }
