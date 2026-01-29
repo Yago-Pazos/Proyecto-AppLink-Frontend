@@ -3,6 +3,7 @@ package com.example.partycoruna;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,20 @@ import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.partycoruna.fragments.AmigosFragment;
 import com.example.partycoruna.fragments.FavoritosFragment;
 import com.example.partycoruna.fragments.HomeFragment;
 import com.example.partycoruna.fragments.PerfilFragment;
+import com.example.partycoruna.network.ApiClient;
+import com.example.partycoruna.network.ApiService;
+import com.example.partycoruna.helpers.AuthManager;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /* MainActivity
  - Actividad principal con soporte edge-to-edge. Manténla como launcher o cambia el manifest.
@@ -34,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView textHome, textFavoritos, textAmigos, textPerfil;
     private Fragment currentFragment;
     private int currentNavItem = 0; // 0: Home, 1: Favoritos, 2: Amigos, 3: Perfil
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
         initializeViews();
         setupNavigation();
-        
+
         // Asegurar que el botón Home esté expandido inicialmente
         navHome.post(() -> {
             textHome.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
@@ -60,8 +70,65 @@ public class MainActivity extends AppCompatActivity {
             navHome.setLayoutParams(params);
             textHome.setAlpha(1f);
         });
-        
+
         loadFragment(new HomeFragment());
+
+        // Inicializamos el servicio de API
+        apiService = ApiClient.getClient().create(ApiService.class);
+
+        // BUSCAMOS EL BOTÓN (Asegurarse de que este ID está en tu layout del menú)
+        View btnLogout = findViewById(R.id.btnLogout);
+
+        if (btnLogout != null) {
+            btnLogout.setOnClickListener(v -> {
+                // LLAMAMOS AL METODO QUE DEFINIMOS ABAJO
+                ejecutarCerrarSesion();
+            });
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        ImageView btnCloseMenu = findViewById(R.id.btnCloseMenu);
+
+        if (btnCloseMenu != null) {
+            btnCloseMenu.setOnClickListener(v -> {
+                drawerLayout.closeDrawers();
+            });
+        }
+
+    }
+
+    private void ejecutarCerrarSesion() {
+        String token = AuthManager.getInstance(this).getToken();
+
+        // Llamada al servidor
+        apiService.logout("Bearer " + token).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                finalizarApp();
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                // Si falla internet, cerramos igual por seguridad
+                finalizarApp();
+            }
+        });
+    }
+    private void finalizarApp() {
+        // Cerramos el menú por si acaso sigue abierto
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        if (drawerLayout != null) {
+            drawerLayout.closeDrawers();
+        }
+
+        // 1. Borramos el token local
+        AuthManager.getInstance(this).clearSession();
+
+        // 2. Vamos al Login y limpiamos el historial
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void initializeViews() {
@@ -191,23 +258,23 @@ public class MainActivity extends AppCompatActivity {
         // Hacer visible el texto
         textView.setVisibility(View.VISIBLE);
         textView.setAlpha(0f);
-        
+
         // Medir el ancho necesario para el texto
         textView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         int textWidth = textView.getMeasuredWidth();
-        
+
         // Ancho mínimo del botón (solo icono)
         int minWidth = (int) (56 * getResources().getDisplayMetrics().density);
         // Ancho máximo del botón (icono + texto + padding)
         int maxWidth = minWidth + textWidth + (int) (16 * getResources().getDisplayMetrics().density);
-        
+
         // Obtener el ancho actual del botón
         int currentWidth = button.getWidth();
         if (currentWidth == 0) {
             button.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             currentWidth = button.getMeasuredWidth();
         }
-        
+
         // Animación del ancho del botón
         ValueAnimator widthAnimator = ValueAnimator.ofInt(currentWidth, maxWidth);
         widthAnimator.setDuration(450);
@@ -219,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
             button.setLayoutParams(params);
         });
         widthAnimator.start();
-        
+
         // Animación de opacidad del texto
         ValueAnimator alphaAnimator = ValueAnimator.ofFloat(0f, 1f);
         alphaAnimator.setDuration(450);
@@ -234,14 +301,14 @@ public class MainActivity extends AppCompatActivity {
     private void collapseButton(LinearLayout button, TextView textView) {
         // Ancho mínimo del botón (solo icono)
         int minWidth = (int) (56 * getResources().getDisplayMetrics().density);
-        
+
         // Obtener el ancho actual del botón
         int currentWidth = button.getWidth();
         if (currentWidth == 0) {
             button.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             currentWidth = button.getMeasuredWidth();
         }
-        
+
         // Animación de opacidad del texto primero
         ValueAnimator alphaAnimator = ValueAnimator.ofFloat(1f, 0f);
         alphaAnimator.setDuration(300);
@@ -251,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
             textView.setAlpha(alpha);
         });
         alphaAnimator.start();
-        
+
         // Animación del ancho del botón
         ValueAnimator widthAnimator = ValueAnimator.ofInt(currentWidth, minWidth);
         widthAnimator.setDuration(400);
