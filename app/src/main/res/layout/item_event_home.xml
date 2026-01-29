@@ -27,7 +27,6 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/gradient_overlay" />
 
-        <!-- CATEGORY BADGE (Top Left) -->
         <TextView
             android:id="@+id/tvCategory"
             android:layout_width="wrap_content"
@@ -35,12 +34,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/category_bg"
-            android:fontFamily="sans-serif-bold"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="6dp"
+            android:fontFamily="sans-serif-black"
+            android:paddingHorizontal="14dp"
+            android:paddingVertical="8dp"
             android:text="ELECTRÓNICA"
-            android:textColor="#00E5FF"
-            android:textSize="10sp"
+            android:textColor="#FFFFFF" 
+            android:textSize="11sp"
             android:letterSpacing="0.1" />
 
         <!-- LIKE BUTTON (Top Right) -->

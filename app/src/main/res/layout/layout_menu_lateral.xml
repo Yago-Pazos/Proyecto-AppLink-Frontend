@@ -33,28 +33,6 @@
             app:tint="#FFFFFF" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/btnEditProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingVertical="15dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground">
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_profile"
-            app:tint="#FFFFFF" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="Editar Perfil"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp" />
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/btnEditInterests"
@@ -89,13 +67,13 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:text="Cerrar Sesión"
-        android:textColor="#00A3FF"
+        android:textColor="#FF4444"
         app:backgroundTint="@android:color/transparent"
-        app:strokeColor="#00A3FF"
+        app:strokeColor="#FF4444"
         app:strokeWidth="1dp"
         app:cornerRadius="12dp"
         app:icon="@drawable/ic_logout"
-        app:iconTint="#00A3FF"
+        app:iconTint="#FF4444"
         android:textAllCaps="false"
         android:layout_marginBottom="20dp" />
 

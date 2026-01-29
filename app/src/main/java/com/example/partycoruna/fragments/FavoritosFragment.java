@@ -35,6 +35,16 @@ public class FavoritosFragment extends Fragment {
 
         recyclerView = root.findViewById(R.id.rvFavorites);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        
+        // Menu Button Logic
+        View btnMenu = root.findViewById(R.id.btnMenu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (getActivity() instanceof com.example.partycoruna.MainActivity) {
+                    ((com.example.partycoruna.MainActivity) getActivity()).openDrawer();
+                }
+            });
+        }
 
         cargarFavoritos();
 

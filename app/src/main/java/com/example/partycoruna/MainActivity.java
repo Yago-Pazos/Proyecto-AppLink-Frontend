@@ -65,7 +65,8 @@ public class MainActivity extends AppCompatActivity {
             textHome.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
             int textWidth = textHome.getMeasuredWidth();
             int minWidth = (int) (56 * getResources().getDisplayMetrics().density);
-            int maxWidth = minWidth + textWidth + (int) (16 * getResources().getDisplayMetrics().density);
+            // Updated to 32dp padding to match expandButton and fit "Inicio"
+            int maxWidth = minWidth + textWidth + (int) (32 * getResources().getDisplayMetrics().density);
             ViewGroup.LayoutParams params = navHome.getLayoutParams();
             params.width = maxWidth;
             navHome.setLayoutParams(params);
@@ -106,13 +107,24 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+        // Buscamos el botón de editar gustos
+        View btnEditInterests = findViewById(R.id.btnEditInterests);
+
+        if (btnEditInterests != null) {
+            btnEditInterests.setOnClickListener(v -> {
+                // Navegar a PreferencesActivity
+                startActivity(new Intent(MainActivity.this, PreferencesActivity.class));
+                drawerLayout.closeDrawers();
+            });
+        }
+
     }
 
     private void ejecutarCerrarSesion() {
         String token = AuthManager.getInstance(this).getToken();
 
         // Llamada al servidor
-        apiService.logout("Bearer " + token).enqueue(new Callback<Void>() {
+        apiService.logout().enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 finalizarApp();
@@ -276,8 +288,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Ancho mínimo del botón (solo icono)
         int minWidth = (int) (56 * getResources().getDisplayMetrics().density);
-        // Ancho máximo del botón (icono + texto + padding)
-        int maxWidth = minWidth + textWidth + (int) (16 * getResources().getDisplayMetrics().density);
+        // Ancho máximo del botón (icono + texto + padding más generoso)
+        int maxWidth = minWidth + textWidth + (int) (32 * getResources().getDisplayMetrics().density);
 
         // Obtener el ancho actual del botón
         int currentWidth = button.getWidth();
@@ -347,6 +359,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         widthAnimator.start();
+    }
+
+    public void openDrawer() {
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        if (drawerLayout != null) {
+            drawerLayout.openDrawer(GravityCompat.START);
+        }
     }
 
     private void loadFragment(Fragment fragment) {

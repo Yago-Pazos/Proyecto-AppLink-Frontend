@@ -57,6 +57,16 @@ public class HomeFragment extends Fragment {
         tabParaTi = view.findViewById(R.id.tabParaTi);
         rvEvents = view.findViewById(R.id.rvEvents);
         
+        // Menu Button Logic
+        View btnMenu = view.findViewById(R.id.btnMenu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (getActivity() instanceof com.example.partycoruna.MainActivity) {
+                    ((com.example.partycoruna.MainActivity) getActivity()).openDrawer();
+                }
+            });
+        }
+        
         rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Set User Name

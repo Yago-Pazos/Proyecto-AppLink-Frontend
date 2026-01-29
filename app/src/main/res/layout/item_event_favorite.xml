@@ -45,11 +45,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/category_bg"
-                android:paddingHorizontal="8dp"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="8dp"
                 android:text="CATEGORÍA"
-                android:textColor="#00A3FF"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:textColor="#FFFFFF"
+                android:fontFamily="sans-serif-black"
+                android:textSize="11sp"
+                android:letterSpacing="0.1" />
 
             <TextView
                 android:id="@+id/tvEventTitle"

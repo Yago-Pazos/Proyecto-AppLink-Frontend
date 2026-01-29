@@ -40,6 +40,16 @@ public class PerfilFragment extends Fragment {
         tvFriends = view.findViewById(R.id.tvFriends);
         imgAvatar = view.findViewById(R.id.imgAvatar);
 
+        // Menu Button Logic
+        View btnMenu = view.findViewById(R.id.btnMenu);
+        if (btnMenu != null) {
+            btnMenu.setOnClickListener(v -> {
+                if (getActivity() instanceof com.example.partycoruna.MainActivity) {
+                    ((com.example.partycoruna.MainActivity) getActivity()).openDrawer();
+                }
+            });
+        }
+
         return view;
 
     }

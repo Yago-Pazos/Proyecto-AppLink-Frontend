@@ -35,11 +35,10 @@ public interface ApiService {
     Call<LoginResponse> loginUser(@Body LoginRequest request);
 
     @GET("users/me")
-    Call<UserProfileResponse> getMyProfile(@Header("Authorization") String token);
+    Call<UserProfileResponse> getMyProfile();
 
     @POST("auth/logout")
-    Call<Void> logout(@Header("Authorization") String token);
-    Call<UserProfileResponse> getMyProfile();
+    Call<Void> logout();
 
     @GET("events")
     Call<List<Evento>> getEvents(@retrofit2.http.Query("filter") String filter);
