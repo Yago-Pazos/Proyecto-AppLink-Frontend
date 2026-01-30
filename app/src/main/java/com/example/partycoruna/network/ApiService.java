@@ -45,4 +45,16 @@ public interface ApiService {
 
     @POST("events/{id}/toggle-favorite")
     Call<com.example.partycoruna.models.ToggleFavoriteResponse> toggleFavorite(@retrofit2.http.Path("id") int eventId);
+
+    @GET("users/me/following/")
+    Call<List<com.example.partycoruna.models.Friend>> getMyFriends(@Header("Authorization") String token);
+
+    @retrofit2.http.DELETE("users/me/following/{id}")
+    Call<Void> deleteFriend(@Header("Authorization") String token, @retrofit2.http.Path("id") int friendId);
+
+    @GET("users/search")
+    Call<com.example.partycoruna.models.UserSearchResponse> searchUsers(@Header("Authorization") String token, @retrofit2.http.Query("query") String query);
+
+    @POST("users/me/follow")
+    Call<Void> followUser(@Header("Authorization") String token, @Body com.example.partycoruna.models.FollowRequest request);
 }

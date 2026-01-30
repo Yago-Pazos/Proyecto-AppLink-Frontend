@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="12dp"
+    android:background="#121B2F"
+    android:layout_marginBottom="8dp">
+
+    <ImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_avatar_placeholder" 
+        android:scaleType="centerCrop"
+        android:background="@drawable/bg_avatar_ring"
+        android:padding="2dp"/>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:text="Nombre Usuario"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="Seguir"
+        android:textSize="12sp"
+        android:backgroundTint="#00A8FF"
+        android:textColor="#FFFFFF"
+        android:layout_marginStart="8dp"/>
+
+</LinearLayout>

@@ -49,6 +49,12 @@
             android:name=".PreferencesActivity"
             android:exported="false" />
 
+        <!-- SEARCH USERS (Añadir Amigo) -->
+        <activity
+            android:name=".SearchUsersActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>
