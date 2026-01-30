@@ -19,9 +19,11 @@ import com.example.partycoruna.models.Friend;
 import com.example.partycoruna.network.ApiClient;
 import com.example.partycoruna.network.ApiService;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -84,13 +86,13 @@ public class SearchUsersActivity extends AppCompatActivity {
                     adapter.notifyDataSetChanged();
 
                     if (userList.isEmpty()) {
-                        Toast.makeText(SearchUsersActivity.this, "No se encontraron usuarios", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SearchUsersActivity.this, R.string.no_found_users, Toast.LENGTH_SHORT).show();
                         layoutEmptyState.setVisibility(View.VISIBLE);
                     } else {
                         recyclerResults.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    Toast.makeText(SearchUsersActivity.this, "Error al buscar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchUsersActivity.this, R.string.search_error, Toast.LENGTH_SHORT).show();
                     layoutEmptyState.setVisibility(View.VISIBLE);
                 }
             }
@@ -98,7 +100,7 @@ public class SearchUsersActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<com.example.partycoruna.models.UserSearchResponse> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
-                Toast.makeText(SearchUsersActivity.this, "Fallo: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(SearchUsersActivity.this, getString(R.string.failure_prefix, t.getMessage()), Toast.LENGTH_LONG).show();
                 layoutEmptyState.setVisibility(View.VISIBLE);
             }
         });
@@ -117,19 +119,24 @@ public class SearchUsersActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    Toast.makeText(SearchUsersActivity.this, "¡Ahora sigues a " + user.getName() + "!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchUsersActivity.this, getString(R.string.now_following, user.getName()), Toast.LENGTH_SHORT).show();
                     // Feedback visual permanente
-                    btnFollow.setText("Seguido");
+                    btnFollow.setText(R.string.seguidor);
                     btnFollow.setBackgroundColor(android.graphics.Color.parseColor("#4CAF50")); // Verde éxito
                     btnFollow.setTextColor(android.graphics.Color.WHITE);
                     // No habilitamos de nuevo porque ya "está seguido" (si se quisiera toggle, habría que cambiar lógica)
                 } else {
                     btnFollow.setEnabled(true);
-                    btnFollow.setText("Seguir"); // Restaurar
-                    try {
-                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "Desconocido";
-                        Toast.makeText(SearchUsersActivity.this, "Error " + response.code() + ": " + errorBody, Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
+                    btnFollow.setText(R.string.seguir); // Restaurar
+                    ResponseBody errorBody = response.errorBody();
+                    if (errorBody != null) {
+                        try (ResponseBody body = errorBody) {
+                            String errorStr = body.string();
+                            Toast.makeText(SearchUsersActivity.this, "Error " + response.code() + ": " + errorStr, Toast.LENGTH_LONG).show();
+                        } catch (IOException e) {
+                            Toast.makeText(SearchUsersActivity.this, "Error " + response.code(), Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
                         Toast.makeText(SearchUsersActivity.this, "Error " + response.code(), Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -138,11 +145,9 @@ public class SearchUsersActivity extends AppCompatActivity {
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 btnFollow.setEnabled(true);
-                btnFollow.setText("Seguir");
-                Toast.makeText(SearchUsersActivity.this, "Fallo red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                btnFollow.setText(R.string.seguir);
+                Toast.makeText(SearchUsersActivity.this, getString(R.string.network_failure, t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
 }
-
-

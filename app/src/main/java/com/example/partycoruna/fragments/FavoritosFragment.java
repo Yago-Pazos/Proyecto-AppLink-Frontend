@@ -71,27 +71,27 @@ public class FavoritosFragment extends Fragment {
                                      eventos.remove(position);
                                      adapter.notifyItemRemoved(position);
                                      adapter.notifyItemRangeChanged(position, eventos.size());
-                                     Toast.makeText(getContext(), "Eliminado de favoritos", Toast.LENGTH_SHORT).show();
+                                     Toast.makeText(getContext(), R.string.removed_from_favorites, Toast.LENGTH_SHORT).show();
                                  } else {
-                                     Toast.makeText(getContext(), "Error al eliminar", Toast.LENGTH_SHORT).show();
+                                     Toast.makeText(getContext(), R.string.error_removing, Toast.LENGTH_SHORT).show();
                                  }
                              }
 
                              @Override
                              public void onFailure(Call<com.example.partycoruna.models.ToggleFavoriteResponse> call, Throwable t) {
-                                 Toast.makeText(getContext(), "Error de red", Toast.LENGTH_SHORT).show();
+                                 Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                              }
                          });
                     });
                     recyclerView.setAdapter(adapter);
                 } else {
                      // Empty or Error
-                     Toast.makeText(getContext(), "No tienes favoritos aún", Toast.LENGTH_SHORT).show();
+                     Toast.makeText(getContext(), R.string.no_favorites_yet, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
             public void onFailure(Call<List<Evento>> call, Throwable t) { 
-                Toast.makeText(getContext(), "Error de red al cargar favoritos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.network_error_loading_favorites, Toast.LENGTH_SHORT).show();
             }
         });
     }

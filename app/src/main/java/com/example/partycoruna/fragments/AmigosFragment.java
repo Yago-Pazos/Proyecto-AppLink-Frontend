@@ -265,4 +265,3 @@ public class AmigosFragment extends Fragment {
         emptyText.setVisibility(amigosList.isEmpty() ? View.VISIBLE : View.GONE);
     }
 }
-

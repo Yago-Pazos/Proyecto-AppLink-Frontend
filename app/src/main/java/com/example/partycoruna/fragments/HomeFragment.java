@@ -202,4 +202,3 @@ public class HomeFragment extends Fragment {
         rvEvents.setAdapter(adapter);
     }
 }
-

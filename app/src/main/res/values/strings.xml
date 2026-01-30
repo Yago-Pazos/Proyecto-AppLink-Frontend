@@ -4,4 +4,20 @@
     <string name="nav_favoritos">Favoritos</string>
     <string name="nav_amigos">Amigos</string>
     <string name="nav_perfil">Perfil</string>
+
+    <!-- Strings añadidos para SearchUsersActivity -->
+    <string name="no_found_users">No se encontraron usuarios</string>
+    <string name="search_error">Error al buscar</string>
+    <string name="failure_prefix">Fallo: %1$s</string>
+    <string name="now_following">¡Ahora sigues a %1$s!</string>
+    <string name="seguidor">Seguido</string>
+    <string name="seguir">Seguir</string>
+    <string name="network_failure">Fallo red: %1$s</string>
+
+    <!-- Strings añadidos para FavoritosFragment -->
+    <string name="removed_from_favorites">Eliminado de favoritos</string>
+    <string name="error_removing">Error al eliminar</string>
+    <string name="network_error">Error de red</string>
+    <string name="no_favorites_yet">No tienes favoritos aún</string>
+    <string name="network_error_loading_favorites">Error de red al cargar favoritos</string>
 </resources>
