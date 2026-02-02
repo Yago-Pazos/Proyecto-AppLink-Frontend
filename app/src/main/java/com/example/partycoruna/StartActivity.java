@@ -15,13 +15,13 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // 🔐 AUTO-LOGIN (Desactivado por petición del usuario)
-        /*if (com.example.partycoruna.helpers.AuthManager.isLoggedIn(this)) {
+        // 🔐 AUTO-LOGIN (Activado)
+        if (com.example.partycoruna.helpers.AuthManager.isLoggedIn(this)) {
             // Ya hay sesión → ir directo a Main
             startActivity(new Intent(this, MainActivity.class));
             finish();
             return;
-        }*/
+        }
 
         // Si no hay token, mostramos la pantalla Start
         setContentView(R.layout.activity_start);
