@@ -13,6 +13,9 @@ import com.example.partycoruna.R;
 
 import android.graphics.Color;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +48,8 @@ public class HomeFragment extends Fragment {
     // Data
     private List<Evento> allEvents = new ArrayList<>();
     private String currentCategory = "TODOS";
+    private String currentSearchQuery = "";
+    private EditText etSearch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,7 +65,25 @@ public class HomeFragment extends Fragment {
         tabDestacados = view.findViewById(R.id.tabDestacados);
         tabParaTi = view.findViewById(R.id.tabParaTi);
         rvEvents = view.findViewById(R.id.rvEvents);
+        etSearch = view.findViewById(R.id.etSearch);
+        
+        // Search Listener
+        if (etSearch != null) {
+            etSearch.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    currentSearchQuery = s.toString();
+                    applyFilters();
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {}
+            });
+        }
+        
         // Menu Button Logic
         View btnMenu = view.findViewById(R.id.btnMenu);
         if (btnMenu != null) {
@@ -128,8 +151,12 @@ public class HomeFragment extends Fragment {
 
         loadEvents(isDestacados);
 
+        loadEvents(isDestacados);
+        
         // Reset filter when switching tabs
         currentCategory = "TODOS";
+        currentSearchQuery = "";
+        if (etSearch != null) etSearch.setText("");
     }
 
     private void loadEvents(boolean isDestacados) {
@@ -161,7 +188,7 @@ public class HomeFragment extends Fragment {
                     );
                     rvEvents.setAdapter(adapter);
                     // Re-apply filter just in case logic needs it, triggers update
-                    filterEvents(currentCategory);
+                    applyFilters();
                 } else {
                     // If API fails or empty, show Mock Data
                     loadMockData();
@@ -217,7 +244,7 @@ public class HomeFragment extends Fragment {
                 category -> filterEvents(category)
         );
         rvEvents.setAdapter(adapter);
-        filterEvents(currentCategory); // Apply filter
+        applyFilters(); // Apply filter
     }
 
 
@@ -228,20 +255,25 @@ public class HomeFragment extends Fragment {
         if (this.currentCategory.equalsIgnoreCase(category)) {
             category = "TODOS";
         }
-
         this.currentCategory = category;
+        applyFilters();
+    }
 
+    private void applyFilters() {
         List<Evento> filtered = new ArrayList<>();
-        if (category.equals("TODOS")) {
-            filtered.addAll(allEvents);
-        } else {
-            for (Evento e : allEvents) {
-                if (e.getCategoria() != null && e.getCategoria().equalsIgnoreCase(category)) {
-                    filtered.add(e);
-                }
+        
+        for (Evento e : allEvents) {
+            boolean matchesCategory = currentCategory.equals("TODOS") || 
+                                      (e.getCategoria() != null && e.getCategoria().equalsIgnoreCase(currentCategory));
+            
+            boolean matchesSearch = currentSearchQuery.isEmpty() || 
+                                    (e.getNombre() != null && e.getNombre().toLowerCase().contains(currentSearchQuery.toLowerCase()));
+
+            if (matchesCategory && matchesSearch) {
+                filtered.add(e);
             }
         }
-
+        
         if (adapter != null) {
             adapter.updateEvents(filtered);
         }
