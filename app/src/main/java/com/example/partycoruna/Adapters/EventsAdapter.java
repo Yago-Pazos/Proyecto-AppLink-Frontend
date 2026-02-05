@@ -20,6 +20,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     private List<Evento> events;
     private OnItemClickListener listener;
     private OnFavoriteClickListener favListener;
+    private OnCategoryClickListener categoryListener;
 
     public interface OnItemClickListener {
         void onItemClick(Evento evento);
@@ -29,10 +30,20 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         void onFavoriteClick(Evento evento);
     }
 
-    public EventsAdapter(List<Evento> events, OnItemClickListener listener, OnFavoriteClickListener favListener) {
+    public interface OnCategoryClickListener {
+        void onCategoryClick(String category);
+    }
+
+    public EventsAdapter(List<Evento> events, OnItemClickListener listener, OnFavoriteClickListener favListener, OnCategoryClickListener categoryListener) {
         this.events = events;
         this.listener = listener;
         this.favListener = favListener;
+        this.categoryListener = categoryListener;
+    }
+
+    // Constructor overload for backward compatibility or strict migration
+    public EventsAdapter(List<Evento> events, OnItemClickListener listener, OnFavoriteClickListener favListener) {
+        this(events, listener, favListener, null);
     }
 
     @NonNull
@@ -45,7 +56,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Evento event = events.get(position);
-        holder.bind(event, listener, favListener);
+        holder.bind(event, listener, favListener, categoryListener);
     }
 
     @Override
@@ -75,7 +86,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             }
         }
 
-        public void bind(final Evento event, final OnItemClickListener listener, final OnFavoriteClickListener favListener) {
+        public void bind(final Evento event, final OnItemClickListener listener, final OnFavoriteClickListener favListener, final OnCategoryClickListener categoryListener) {
             tvTitle.setText(event.getNombre());
             tvDate.setText(event.getFecha());
             tvLocation.setText(event.getLugar());
@@ -103,6 +114,14 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 event.setFavorite(!event.isFavorite());
                 updateFavoriteIcon(event.isFavorite());
             });
+
+            if (categoryListener != null) {
+                tvCategory.setOnClickListener(v -> {
+                    if (event.getCategoria() != null) {
+                        categoryListener.onCategoryClick(event.getCategoria());
+                    }
+                });
+            }
         }
         
         private void updateFavoriteIcon(boolean isFavorite) {
@@ -120,5 +139,9 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 }
             }
         }
+    }
+    public void updateEvents(List<Evento> newEvents) {
+        this.events = newEvents;
+        notifyDataSetChanged();
     }
 }

@@ -12,6 +12,8 @@ import com.example.partycoruna.R;
 
 
 import android.graphics.Color;
+import android.util.TypedValue;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +43,10 @@ public class HomeFragment extends Fragment {
     private TextView tabDestacados, tabParaTi;
     private RecyclerView rvEvents;
     private EventsAdapter adapter;
+    
+    // Data
+    private List<Evento> allEvents = new ArrayList<>();
+    private String currentCategory = "TODOS";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -123,6 +129,9 @@ public class HomeFragment extends Fragment {
         }
         
         loadEvents(isDestacados);
+        
+        // Reset filter when switching tabs
+        currentCategory = "TODOS";
     }
 
     private void loadEvents(boolean isDestacados) {
@@ -130,24 +139,31 @@ public class HomeFragment extends Fragment {
         
         ApiService api = ApiClient.getClient().create(ApiService.class);
         api.getEvents(filter).enqueue(new Callback<List<Evento>>() {
-            @Override
-            public void onResponse(Call<List<Evento>> call, Response<List<Evento>> response) {
-                 if (response.isSuccessful() && response.body() != null) {
-                     List<Evento> events = response.body();
-                     // Si devuelve vacío y es "Para ti", quizás el usuario no tiene preferencias.
-                     // Aún así mostramos lo que venga (o lista vacía).
+             public void onResponse(Call<List<Evento>> call, Response<List<Evento>> response) {
+                  if (response.isSuccessful() && response.body() != null) {
+                      allEvents = response.body();
+                      filterEvents(currentCategory); // Apply current filter (usually TODOS on load)
+                      
+                      // adapter creation moved below to use filtered list or initial list
+                      List<Evento> eventsToShow = new ArrayList<>(allEvents);
                      
-                     adapter = new EventsAdapter(events, 
-                         evento -> {
-                             // Click en evento
-                             Toast.makeText(getContext(), "Click en " + evento.getNombre(), Toast.LENGTH_SHORT).show();
-                         },
-                         evento -> {
-                             // Click en favorito
-                             toggleFavorite(evento);
-                         }
-                     );
-                     rvEvents.setAdapter(adapter);
+                      adapter = new EventsAdapter(eventsToShow, 
+                          evento -> {
+                              // Click en evento
+                              Toast.makeText(getContext(), "Click en " + evento.getNombre(), Toast.LENGTH_SHORT).show();
+                          },
+                          evento -> {
+                              // Click en favorito
+                              toggleFavorite(evento);
+                          },
+                          category -> {
+                                // Click en categoria
+                                filterEvents(category);
+                          }
+                      );
+                      rvEvents.setAdapter(adapter);
+                      // Re-apply filter just in case logic needs it, triggers update
+                      filterEvents(currentCategory);
                  } else {
                      // If API fails or empty, show Mock Data
                      loadMockData();
@@ -195,10 +211,41 @@ public class HomeFragment extends Fragment {
         mockEventos.add(new Evento(7, "Salsa & Bachata", "Dom, 03 Dic • 19:00", "Latin Steps", "https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=2070&auto=format&fit=crop", "LATINO"));
         mockEventos.add(new Evento(8, "Techno Bunker", "Vie, 08 Dic • 01:00", "O Tunel", "https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?q=80&w=2072&auto=format&fit=crop", "TECHNO"));
         
-        adapter = new EventsAdapter(mockEventos, 
+        allEvents = mockEventos;
+        
+        adapter = new EventsAdapter(new ArrayList<>(allEvents), 
             evento -> Toast.makeText(getContext(), evento.getNombre(), Toast.LENGTH_SHORT).show(),
-            evento -> Toast.makeText(getContext(), "Like en Demo: " + evento.getNombre(), Toast.LENGTH_SHORT).show()
+            evento -> Toast.makeText(getContext(), "Like en Demo: " + evento.getNombre(), Toast.LENGTH_SHORT).show(),
+            category -> filterEvents(category)
         );
         rvEvents.setAdapter(adapter);
+        filterEvents(currentCategory); // Apply filter
+    }
+
+
+
+
+    private void filterEvents(String category) {
+        // Toggle logic: if clicking same category, reset to TODOS
+        if (this.currentCategory.equalsIgnoreCase(category)) {
+             category = "TODOS";
+        }
+        
+        this.currentCategory = category;
+        
+        List<Evento> filtered = new ArrayList<>();
+        if (category.equals("TODOS")) {
+            filtered.addAll(allEvents);
+        } else {
+            for (Evento e : allEvents) {
+                if (e.getCategoria() != null && e.getCategoria().equalsIgnoreCase(category)) {
+                    filtered.add(e);
+                }
+            }
+        }
+        
+        if (adapter != null) {
+            adapter.updateEvents(filtered);
+        }
     }
 }
