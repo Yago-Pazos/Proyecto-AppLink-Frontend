@@ -12,9 +12,7 @@ import com.example.partycoruna.R;
 
 
 import android.graphics.Color;
-import android.util.TypedValue;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -23,7 +21,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.partycoruna.R;
+
 import com.example.partycoruna.adapters.EventsAdapter;
 import com.example.partycoruna.helpers.AuthManager;
 import com.example.partycoruna.models.Evento;
@@ -43,7 +41,7 @@ public class HomeFragment extends Fragment {
     private TextView tabDestacados, tabParaTi;
     private RecyclerView rvEvents;
     private EventsAdapter adapter;
-    
+
     // Data
     private List<Evento> allEvents = new ArrayList<>();
     private String currentCategory = "TODOS";
@@ -62,7 +60,7 @@ public class HomeFragment extends Fragment {
         tabDestacados = view.findViewById(R.id.tabDestacados);
         tabParaTi = view.findViewById(R.id.tabParaTi);
         rvEvents = view.findViewById(R.id.rvEvents);
-        
+
         // Menu Button Logic
         View btnMenu = view.findViewById(R.id.btnMenu);
         if (btnMenu != null) {
@@ -72,7 +70,7 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
-        
+
         rvEvents.setLayoutManager(new LinearLayoutManager(getContext()));
 
         // Set User Name
@@ -113,11 +111,11 @@ public class HomeFragment extends Fragment {
             // Style Destacados Active
             tabDestacados.setBackgroundResource(R.drawable.btn_primary);
             tabDestacados.setTextColor(ContextCompat.getColor(requireContext(), R.color.white));
-            
+
             // Style Para Ti Inactive
             tabParaTi.setBackgroundColor(Color.TRANSPARENT);
             tabParaTi.setTextColor(Color.parseColor("#AAAAAA"));
-            
+
         } else {
             // Style Para Ti Active
             tabParaTi.setBackgroundResource(R.drawable.btn_primary);
@@ -127,47 +125,47 @@ public class HomeFragment extends Fragment {
             tabDestacados.setBackgroundColor(Color.TRANSPARENT);
             tabDestacados.setTextColor(Color.parseColor("#AAAAAA"));
         }
-        
+
         loadEvents(isDestacados);
-        
+
         // Reset filter when switching tabs
         currentCategory = "TODOS";
     }
 
     private void loadEvents(boolean isDestacados) {
         String filter = isDestacados ? "featured" : "recommendations";
-        
+
         ApiService api = ApiClient.getClient().create(ApiService.class);
         api.getEvents(filter).enqueue(new Callback<List<Evento>>() {
-             public void onResponse(Call<List<Evento>> call, Response<List<Evento>> response) {
-                  if (response.isSuccessful() && response.body() != null) {
-                      allEvents = response.body();
-                      filterEvents(currentCategory); // Apply current filter (usually TODOS on load)
-                      
-                      // adapter creation moved below to use filtered list or initial list
-                      List<Evento> eventsToShow = new ArrayList<>(allEvents);
-                     
-                      adapter = new EventsAdapter(eventsToShow, 
-                          evento -> {
-                              // Click en evento
-                              Toast.makeText(getContext(), "Click en " + evento.getNombre(), Toast.LENGTH_SHORT).show();
-                          },
-                          evento -> {
-                              // Click en favorito
-                              toggleFavorite(evento);
-                          },
-                          category -> {
+            public void onResponse(Call<List<Evento>> call, Response<List<Evento>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    allEvents = response.body();
+                    filterEvents(currentCategory); // Apply current filter (usually TODOS on load)
+
+                    // adapter creation moved below to use filtered list or initial list
+                    List<Evento> eventsToShow = new ArrayList<>(allEvents);
+
+                    adapter = new EventsAdapter(eventsToShow,
+                            evento -> {
+                                // Click en evento
+                                Toast.makeText(getContext(), "Click en " + evento.getNombre(), Toast.LENGTH_SHORT).show();
+                            },
+                            evento -> {
+                                // Click en favorito
+                                toggleFavorite(evento);
+                            },
+                            category -> {
                                 // Click en categoria
                                 filterEvents(category);
-                          }
-                      );
-                      rvEvents.setAdapter(adapter);
-                      // Re-apply filter just in case logic needs it, triggers update
-                      filterEvents(currentCategory);
-                 } else {
-                     // If API fails or empty, show Mock Data
-                     loadMockData();
-                 }
+                            }
+                    );
+                    rvEvents.setAdapter(adapter);
+                    // Re-apply filter just in case logic needs it, triggers update
+                    filterEvents(currentCategory);
+                } else {
+                    // If API fails or empty, show Mock Data
+                    loadMockData();
+                }
             }
 
             @Override
@@ -201,7 +199,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadMockData() {
-         List<Evento> mockEventos = new ArrayList<>();
+        List<Evento> mockEventos = new ArrayList<>();
         mockEventos.add(new Evento(1, "Neon Nights Festival", "Vie, 24 Nov • 22:00", "Club Supernova", "https://images.unsplash.com/photo-1545128485-c400e7702796?q=80&w=2070&auto=format&fit=crop", "ELECTRÓNICA"));
         mockEventos.add(new Evento(2, "Sunset Rooftop Party", "Sáb, 25 Nov • 18:00", "Sky Bar Coruña", "https://images.unsplash.com/photo-1514525253440-b393452e3383?q=80&w=2666&auto=format&fit=crop", "CHILL OUT"));
         mockEventos.add(new Evento(3, "Rock Legends Live", "Dom, 26 Nov • 21:00", "Sala Mardigras", "https://images.unsplash.com/photo-1459749411177-0473ef71607b?q=80&w=2070&auto=format&fit=crop", "ROCK"));
@@ -210,13 +208,13 @@ public class HomeFragment extends Fragment {
         mockEventos.add(new Evento(6, "Indie Codes", "Sáb, 02 Dic • 21:30", "Playa Club", "https://images.unsplash.com/photo-1501612780327-45045538702b?q=80&w=2070&auto=format&fit=crop", "INDIE"));
         mockEventos.add(new Evento(7, "Salsa & Bachata", "Dom, 03 Dic • 19:00", "Latin Steps", "https://images.unsplash.com/photo-1533174072545-e8d4aa97edf9?q=80&w=2070&auto=format&fit=crop", "LATINO"));
         mockEventos.add(new Evento(8, "Techno Bunker", "Vie, 08 Dic • 01:00", "O Tunel", "https://images.unsplash.com/photo-1571266028243-3716f02d2d2e?q=80&w=2072&auto=format&fit=crop", "TECHNO"));
-        
+
         allEvents = mockEventos;
-        
-        adapter = new EventsAdapter(new ArrayList<>(allEvents), 
-            evento -> Toast.makeText(getContext(), evento.getNombre(), Toast.LENGTH_SHORT).show(),
-            evento -> Toast.makeText(getContext(), "Like en Demo: " + evento.getNombre(), Toast.LENGTH_SHORT).show(),
-            category -> filterEvents(category)
+
+        adapter = new EventsAdapter(new ArrayList<>(allEvents),
+                evento -> Toast.makeText(getContext(), evento.getNombre(), Toast.LENGTH_SHORT).show(),
+                evento -> Toast.makeText(getContext(), "Like en Demo: " + evento.getNombre(), Toast.LENGTH_SHORT).show(),
+                category -> filterEvents(category)
         );
         rvEvents.setAdapter(adapter);
         filterEvents(currentCategory); // Apply filter
@@ -228,11 +226,11 @@ public class HomeFragment extends Fragment {
     private void filterEvents(String category) {
         // Toggle logic: if clicking same category, reset to TODOS
         if (this.currentCategory.equalsIgnoreCase(category)) {
-             category = "TODOS";
+            category = "TODOS";
         }
-        
+
         this.currentCategory = category;
-        
+
         List<Evento> filtered = new ArrayList<>();
         if (category.equals("TODOS")) {
             filtered.addAll(allEvents);
@@ -243,9 +241,10 @@ public class HomeFragment extends Fragment {
                 }
             }
         }
-        
+
         if (adapter != null) {
             adapter.updateEvents(filtered);
         }
     }
 }
+

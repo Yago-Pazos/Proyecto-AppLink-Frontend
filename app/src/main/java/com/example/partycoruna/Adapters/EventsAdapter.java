@@ -25,7 +25,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
     public interface OnItemClickListener {
         void onItemClick(Evento evento);
     }
-    
+
     public interface OnFavoriteClickListener {
         void onFavoriteClick(Evento evento);
     }
@@ -77,12 +77,12 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             tvDate = itemView.findViewById(R.id.tvDate);
             tvLocation = itemView.findViewById(R.id.tvLocation);
             btnLike = itemView.findViewById(R.id.btnLike);
-            
+
             // Assuming btnLike contains the ImageView. Let's find it.
             // In item_event_home.xml, btnLike is a FrameLayout containing an ImageView.
             // We need to access that inner ImageView to change its resource/tint.
             if (btnLike instanceof android.view.ViewGroup) {
-                 imgLikeIcon = (ImageView) ((android.view.ViewGroup) btnLike).getChildAt(0);
+                imgLikeIcon = (ImageView) ((android.view.ViewGroup) btnLike).getChildAt(0);
             }
         }
 
@@ -90,11 +90,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             tvTitle.setText(event.getNombre());
             tvDate.setText(event.getFecha());
             tvLocation.setText(event.getLugar());
-            
+
             if(event.getCategoria() != null) {
                 tvCategory.setText(event.getCategoria().toUpperCase());
             } else {
-                tvCategory.setText("GLOW"); 
+                tvCategory.setText("GLOW");
             }
 
             Glide.with(itemView.getContext())
@@ -104,7 +104,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                     .into(imgEvent);
 
             itemView.setOnClickListener(v -> listener.onItemClick(event));
-            
+
             // Favorite Logic
             updateFavoriteIcon(event.isFavorite());
 
@@ -123,7 +123,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 });
             }
         }
-        
+
         private void updateFavoriteIcon(boolean isFavorite) {
             if (imgLikeIcon != null && btnLike != null) {
                 if (isFavorite) {
@@ -135,7 +135,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                     // Inactive: Translucent Circle + White Outline Heart
                     btnLike.setBackgroundResource(R.drawable.circle_bg_translucent);
                     imgLikeIcon.setImageResource(R.drawable.ic_heart);
-                    imgLikeIcon.setColorFilter(android.graphics.Color.WHITE); 
+                    imgLikeIcon.setColorFilter(android.graphics.Color.WHITE);
                 }
             }
         }
